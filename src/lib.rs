@@ -6,7 +6,7 @@ pub struct World {
     pub resources: Mutex<u64>,
 }
 
-#[derive(Deserialize)]
+#[derive(Deserialize, Serialize)]
 pub struct Worker {
     pub uid: String,
     pub work: u64,
@@ -14,13 +14,12 @@ pub struct Worker {
     pub worker_credit: u64,
 }
 
-#[derive(Serialize)]
+#[derive(Deserialize, Serialize)]
 pub struct WorkResponse {
     pub mine_resources: u64,
     pub work_credit: u64,
 }
 
-#[post("/do_work")]
 pub async fn do_work(info: web::Json<Worker>, data: web::Data<World>) -> impl Responder {
     let mut shared_data = data.resources.lock().unwrap();
     let mut credit = 0;
