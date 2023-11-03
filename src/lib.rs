@@ -30,7 +30,7 @@ pub async fn do_work(info: web::Json<Worker>, data: web::Data<World>) -> impl Re
         println!("Your work has been processed: {}!", info.work);
         *shared_data = result;
     } else {
-        println!("You work was partially processed!");
+        println!("Your work was partially processed!");
         if let Some(c) = info.work.checked_sub(*shared_data) {
             // TODO: this breaks integrity since workers can provide their own credit
             credit = c + info.worker_credit;
